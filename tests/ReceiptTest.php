@@ -17,7 +17,7 @@ class ReceiptTest extends TestCase {
   public function teardown() {
         unset($this->Receipt);
     }
-	}
+
 	// Receipt Total test couponita
 	public function testTotal() {
 		// array vajalik meetodi kasutamiseks ja testimiseks
@@ -49,7 +49,7 @@ class ReceiptTest extends TestCase {
     }
 
 //Receipt tax meetodi testimine
-	public function testTax() {
+		public function testTax() {
         // muutujad ja nende väärtused
         $inputAmount = 10;
         $taxInput = 0.1;
@@ -60,4 +60,26 @@ class ReceiptTest extends TestCase {
             $output,
             'Tax calculation should be equal to 1'
         );
+}
+
+// Receipt postTaxTotal meetodi testimine
+		public function testPostTaxTotal() {
+				// Loome Receipti-le uue Mock Receipt objekti
+				$Receipt = $this->getMockBuilder('TDD\Receipt')
+						->setMethods(['total', 'tax'])
+						->getMock();
+				// Stubi loomine, total returnib 10
+				$Receipt->method('total')
+						->will($this->returnValue(10.00));
+				// Stubi järgi tax returnib 1
+				$Receipt->method('tax')
+						->will($this->returnValue(1));
+				// postTaxTotali muutujate panemine muutujasse, 16 ja 0.2, mis kontrollib aga $results muutujatega 11 ja 0.1.
+				$result = $Receipt->postTaxTotal([1, 2, 5, 8], 0.2, null);
+				$this->assertEquals(
+						11.00,
+						$result
+				);
+}
+
 }

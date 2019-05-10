@@ -19,19 +19,27 @@ class ReceiptTest extends TestCase {
     }
 
 	// Receipt Total test couponita
-	public function testTotal() {
+	public function testTotal($items, $expected) {
 		// array vajalik meetodi kasutamiseks ja testimiseks
-		$input = [0, 2, 5, 8];
 		$coupon = null;
 		// Receipt meetodi kasutamine koos eelneva array-ga
-		$output = $this->Receipt->total($input, $coupon);
+		$output = $this->Receipt->total($items, $coupon);
 		$this->assertEquals(
 			// Testib, kas oodatav väärtus on sama, mis assertEquals-is välja toodud
-			15,
+			$expected,
 			$output,
-			'When summing the total should equal 15'
+			"When running should equal to {$expected}"
 		);
 	}
+// data provider, mis annab total meetodile väärtused testimiseks
+	public function provideTotal() {
+			 // Esimene element on testTotal $itemi parameeter ja teine on $expected
+			 return [
+					 [[1, 2, 5, 8], 16],
+					 [[-1, 2, 5, 8], 14],
+					 [[1, 2, 8], 11],
+			 ];
+	 }
 
 	// Receipt Total test couponiga
     public function testTotalAndCoupon(){

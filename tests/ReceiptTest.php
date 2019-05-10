@@ -30,4 +30,15 @@ class ReceiptTest extends TestCase {
 			'When summing the total should equal 15'
 		);
 	}
+	public function testTax() {
+        // muutujad ja nende väärtused
+        $inputAmount = 10;
+        $taxInput = 0.1;
+        $output = $this->Receipt->tax($inputAmount, $taxInput);
+        $this->assertEquals(
+					// phpunit testimeetod, mis eeldab tulemust 1, tegelik tulemus on output ja 
+            1,
+            $output,
+            'Tax calculation should be equal to 1'
+        );
 }

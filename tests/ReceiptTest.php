@@ -33,9 +33,11 @@ class ReceiptTest extends TestCase {
 	}
 // data provider, mis annab total meetodile väärtused testimiseks
 	public function provideTotal() {
-			 // Esimene element on testTotal $itemi parameeter ja teine on $expected
+			 // Esimene element on testTotal $itemi parameeter ja teine on $expectedi
 			 return [
-					 [[1, 2, 5, 8], 16],
+				 // Array-le lisatud key, mille abil saab testi filtreerida ja mis näitab, milliste väärtustega
+				 // antud test feilis
+					'ints total 16' => [[1, 2, 5, 8], 16],
 					 [[-1, 2, 5, 8], 14],
 					 [[1, 2, 8], 11],
 			 ];

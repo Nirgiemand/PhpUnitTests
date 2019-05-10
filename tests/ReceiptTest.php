@@ -64,15 +64,22 @@ class ReceiptTest extends TestCase {
 
 // Receipt postTaxTotal meetodi testimine
 		public function testPostTaxTotal() {
+				$items = [1, 2, 5, 8];
+        $tax = 0.2;
+        $coupon = null;
 				// Loome Receipti-le uue Mock Receipt objekti
 				$Receipt = $this->getMockBuilder('TDD\Receipt')
 						->setMethods(['total', 'tax'])
 						->getMock();
-				// Stubi loomine, total returnib 10
-				$Receipt->method('total')
+				// Oodatud(expects) argumentidega stubi mock, mis eeldab, et meetodid kutsutakse välja korra.(once)
+		    $Receipt->expects($this->once())
+		            ->method('total')
+		            ->with($items, $coupon)
 						->will($this->returnValue(10.00));
-				// Stubi järgi tax returnib 1
-				$Receipt->method('tax')
+				// Oodatud(expects) argumentidega stubi mock, mis eeldab, et meetodid kutsutakse välja korra.(once)
+				$Receipt->expects($this->once())
+	             ->method('tax')
+	             ->with(10.00, $tax)
 						->will($this->returnValue(1));
 				// postTaxTotali muutujate panemine muutujasse, 16 ja 0.2, mis kontrollib aga $results muutujatega 11 ja 0.1.
 				$result = $Receipt->postTaxTotal([1, 2, 5, 8], 0.2, null);
